@@ -2,8 +2,8 @@ Wrestle Bee (aka: RestLB)
 
 (Current phase: idea)
 
-Wrestle Bee is a Load Balancing solution which is configured via a REST based
-interface. The primary goals are:
+Wrestle Bee (Rest LB), an Erlang based load balancer configured via a REST
+interface.
 
 1. REST based configuration. This will allow anyone to create their own
 interface for it, whether it's web based, or even a bash script using curl.
@@ -21,15 +21,8 @@ take control of services in the event of a host outage within reason. For
 example if NodeA is bound to 10.1.1.1:80 for your website, and goes down, NodeB
 if it's on the same subnet can bind that address, keeping your website up.
 
-5. Extendable. The system should provide hooks to allow you to extend it. Say
-for example you wanted to build http caching directly into an http listener. 
+5. Extendable. The system will provide hooks to allow you to extend it. Say
+for example you wanted to build http caching directly into an http listener.
+Or a built in tool to provide monitoring and alerting based on health checks.
 
-
-Examples:
-
-PUT /pool/www/
-    body: {["192.168.1.1:80", "192.168.1.2:80"]}
-
-PUT /service/www/
-    body:  {"bind": "10.1.1.1:80",
-            "pool": "www"}
+See the docs tree for current design documentation.
