@@ -23,4 +23,53 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the
 authors and should not be interpreted as representing official policies, either expressed
 
+ARCHITECTURE OVERVIEW
 
+Wrestle Bee is a load balancer that uses a REST API for configuration
+management. It also allows dynamic configuration, meaning no restarts
+required to manage it's properties.
+
+It's a scalable solution, written using Erlang/OTP allowing it to run
+across multiple Erlang VMs on different physical hosts.
+
+CORE
+
+The core pieces are:
+
+Nodes: Which are Erlang VM instances of the application.
+
+Services: These are the externally accessible IP/Ports that traffic enters the
+system through.
+
+Devices: The load balanced end points.
+
+Pools: Collections of devices to provide load balancing.
+
+Basic connection flow is as follows.
+
+CONNECTION FLOW
+
+Request -> Service -> (load balanced using pool) -> Device
+
+CONFIGURATION
+
+Each node will have an open HTTP port by which configuration can be done using
+REST API endpoints. Configuration is stored in a mnesia database used by all
+nodes in the cluster.
+
+As configuration is handled by REST, an export of the current configuration will
+have the option of being delievered as bash script using curl to reimplement the
+configuration. It will also have the option of being exported via JSON which
+allow it to be simple to create interfaces using JSON and the REST endpoints.
+
+MODULAR
+
+The system will provide points to hook into for extending the functionality of
+various endpoints. gen_event will be used to fire off data for which statistic
+gathering or logging engines can be developed. 
+
+For services, they can be extended to add extra functionality. Build static
+file serving or even caching into your services freeing up the need to deploy
+those as additional connections between the balancer and end points.
+
+Pools can be extended by allowing custom health checking scripts to be created.
