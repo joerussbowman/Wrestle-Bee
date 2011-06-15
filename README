@@ -1,0 +1,35 @@
+Wrestle Bee (aka: RestLB)
+
+(Current phase: idea)
+
+Wrestle Bee is a Load Balancing solution which is configured via a REST based
+interface. The primary goals are:
+
+1. REST based configuration. This will allow anyone to create their own
+interface for it, whether it's web based, or even a bash script using curl.
+
+2. Easy configuration export. It should be as simple as possible to backup the
+current configuration. By default a configuration export will dump a shell
+script which will use curl to rebuild the configuration from scratch. There
+will also be a JSON option, primarily to be used by interfaces and monitoring.
+
+3. Dynamic. There should be no restarts necessary when configuring the sytem.
+
+4. Scalable and redundant. By default this will be a system intended to run as
+a cluster of nodes. Individual hosts will be aware of each other and be able to
+take control of services in the event of a host outage within reason. For
+example if NodeA is bound to 10.1.1.1:80 for your website, and goes down, NodeB
+if it's on the same subnet can bind that address, keeping your website up.
+
+5. Extendable. The system should provide hooks to allow you to extend it. Say
+for example you wanted to build http caching directly into an http listener. 
+
+
+Examples:
+
+PUT /pool/www/
+    body: {["192.168.1.1:80", "192.168.1.2:80"]}
+
+PUT /service/www/
+    body:  {"bind": "10.1.1.1:80",
+            "pool": "www"}
