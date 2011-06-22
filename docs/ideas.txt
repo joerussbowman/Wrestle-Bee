@@ -1,0 +1,35 @@
+Just a quick doc of ideas for the project so I don't forget them.
+
+ - Add ZeroMQ support. This could be for the following items
+    * Configurable ZeroMQ Serivces (ie: PULL or SUB, and ROUTER)
+    * ZeroMQ worker end points. These would be PUSH, PUB and DEALER)
+      REQ/REP may be options, since they can run in Erlang processes?
+    * Give ZeroMQ access to gen_event, allowing ZeroMQ to be used with
+      logging and statistic modules. 
+
+ - Multiple balancing types
+    * LRU Queue
+    * Round Robin
+    * Health Check response time weighted
+
+ - Priority groups or weighting for managing traffic to back ends? Both?
+
+ - Check out procket for binding services to low end ports
+   https://github.com/msantos/procket
+   Point is, most of the app can run in user space for better
+   security
+
+
+
+Milestones
+
+1 -> client to server. Requirements
+    REST API
+    * configure serivce
+    * configure worker
+    FUNCTIONALITY
+    * bind to service port
+    * pass request from client to worker and response back
+
+2 -> load balancing
+    ....
